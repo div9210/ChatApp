@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Server
+// Server Side
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server is listening on PORT", process.env.PORT || 3000);
 })
