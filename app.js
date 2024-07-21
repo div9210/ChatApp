@@ -12,15 +12,17 @@ app.use(express.json());
 // Routers
 const groupRoutes = require("./routes/Group.js");
 const memberRoutes = require("./routes/Member.js");
+const messageRoutes = require("./routes/Message.js");
 
 // Routes
 app.post('/login', auth.login);
 app.use("/group", groupRoutes);
 app.use("/member", memberRoutes);
+app.use("/messages", messageRoutes);
 
 // Error Handling
 app.use((err, req, res, next) => {
-    res.status(500).json({
+    res.status(400).json({
         status: 500,
         message: err.message
     });
@@ -29,4 +31,9 @@ app.use((err, req, res, next) => {
 // Server Side
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server is listening on PORT", process.env.PORT || 3000);
-})
+});
+
+module.exports = app;
+
+
+

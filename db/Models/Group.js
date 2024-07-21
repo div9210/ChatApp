@@ -31,5 +31,8 @@ const Group = sequelize.define(
     },
 );
 
+// Associations
+Group.belongsTo(User, { foreignKey: 'created_by', onDelete: "CASCADE" });
+User.hasMany(Group, { foreignKey: 'created_by', onDelete: 'CASCADE', });
 
 module.exports = Group;

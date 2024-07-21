@@ -99,6 +99,19 @@ module.exports = {
                 });
             }
 
+            // Check if this group already exists
+            const findGroupWithThisName = await models.Group.findOne({
+                where: {
+                    group_name: groupName,
+                }
+            });
+
+            if (findGroupWithThisName) {
+                return res.status(400).json({
+                    message: "Group with this name already exists!"
+                });
+            }
+
             const newGroup = await models.Group.create({
                 group_name: groupName,
                 created_by: userId
@@ -112,7 +125,8 @@ module.exports = {
             });
 
             return res.status(200).json({
-                message: "Group has been created successfully!"
+                message: "Group has been created successfully!",
+                data: newGroup.dataValues
             })
         } catch (error) {
             next(error);
