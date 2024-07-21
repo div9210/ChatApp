@@ -2,8 +2,9 @@ const User = require('./User');
 const Messages = require("./Messages");
 const Group = require("./Group");
 const Member = require("./Member");
+const LikedMessage = require('./LikedMessage');
 
-const models = [User, Messages, Group, Member];
+const models = [User, Messages, Group, Member, LikedMessage];
 
 async function createModels() {
     try {
@@ -20,6 +21,8 @@ module.exports = {
     User,
     Messages,
     Group,
-    Member
+    Member,
+    LikedMessage,
+    createModels
 }
 

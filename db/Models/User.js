@@ -1,5 +1,6 @@
 const { sequelize } = require("../db");
 const { DataTypes } = require('sequelize');
+const bcrypt = require("bcryptjs");
 
 const User = sequelize.define(
     'User',
@@ -27,7 +28,20 @@ const User = sequelize.define(
 
     },
     {
-        tableName: "users"
+        tableName: "users",
+        hooks: {
+            afterSync: async (options) => {
+                // Insert default admin user
+                await User.findOrCreate({
+                    where: { user_name: 'testAdmin' },
+                    defaults: {
+                        full_name: "Test Admin",
+                        user_name: "test_admin",
+                        password: await bcrypt.hash("password", 10),
+                    }
+                });
+            }
+        }
     },
 );
 

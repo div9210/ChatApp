@@ -1,6 +1,7 @@
 const { sequelize } = require("../db");
 const { DataTypes } = require('sequelize');
 const User = require("./User");
+const Group = require("./Group");
 
 const Messages = sequelize.define(
     'Messages',
@@ -25,8 +26,12 @@ const Messages = sequelize.define(
             allowNull: false
         },
         group_id: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: Group,
+                key: "group_id"
+            }
         },
 
     },
@@ -35,5 +40,8 @@ const Messages = sequelize.define(
     },
 );
 
+// Associations
+Messages.belongsTo(Group, { foreignKey: 'group_id' });
+Group.hasMany(Messages, { foreignKey: 'group_id' });
 
 module.exports = Messages;
